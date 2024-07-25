@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Input from "./Input";
 
+// onAdd prop function is to add the new project input by the user and this takes object as the parameter 
 export default function NewProject({onAdd}) {
   const title = useRef();
   const description = useRef();
@@ -11,6 +12,7 @@ export default function NewProject({onAdd}) {
     const enteredDescription = description.current.value;
     const enteredDueDate = dueDate.current.value;
 
+    // when we click on the save button using the ref we can acces the input on every keystoke
     onAdd({
       title: enteredTitle,
       description: enteredDescription,
