@@ -26,19 +26,20 @@ function App() {
     setProjectsState(prevState =>{
       // here we have create a new object to add the new project object which contains the deatils of the project
       // and using the spread operator we have added all the key value pairs of that object passed
+      const projectId = Math.random;
       const newProject = {
         ...projectData,
-        id: Math.random
+        id: projectId
       };
       // and here we have spread all the prevSate data and in the list of projects spread the prev projects and add new project
       return {
         ...prevState,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject]
       }
     });
   }
 
-  console.log(projectsState);
 
   let content;
   //  this we have conditionally check whcih one to render based on the UI
@@ -51,7 +52,7 @@ function App() {
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectSideBar onSatartAddProject={handleStartAddProject}/>
+      <ProjectSideBar onSatartAddProject={handleStartAddProject} projects={projectsState.projects}/>
       {/* <NewProject /> */}
       {content}
     </main>
