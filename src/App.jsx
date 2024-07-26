@@ -21,6 +21,15 @@ function App() {
     });
   }
 
+  function handleCancelAddProject(){
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined, 
+      };
+    });
+  }
+
   // now this function will be clled from the newProject component when user enters the details of the project
   function handleAddProject(projectData){
     setProjectsState(prevState =>{
@@ -44,7 +53,7 @@ function App() {
   let content;
   //  this we have conditionally check whcih one to render based on the UI
   if(projectsState.selectedProjectId === null){
-    content = <NewProject onAdd={handleAddProject}/>;
+    content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>;
   }
   else if(projectsState.selectedProjectId === undefined){
     content = <NoProjectSelected onSatartAddProject={handleStartAddProject}/>;
