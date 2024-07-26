@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProjectSideBar from "./components/ProjectSideBar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
+import SelectedProject from "./components/SelectedProject";
 
 function App() {
   // this state is used to define the properties of the new project to be added
@@ -11,6 +12,15 @@ function App() {
     selectedProjectId: undefined,     
     projects: []
   });
+
+  function handleSelectProject(id){
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: id,    // and null to represent we are adding new project
+      };
+    });
+  }
 
   function handleStartAddProject(){
     setProjectsState(prevState => {
@@ -49,8 +59,8 @@ function App() {
     });
   }
 
-
-  let content;
+  const selectedProject = projectsState.projects.find(project => project.id === projectsState.selectedProjectId);
+  let content = <SelectedProject project={selectedProject}/>
   //  this we have conditionally check whcih one to render based on the UI
   if(projectsState.selectedProjectId === null){
     content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>;
@@ -61,7 +71,11 @@ function App() {
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectSideBar onSatartAddProject={handleStartAddProject} projects={projectsState.projects}/>
+      <ProjectSideBar 
+        onSatartAddProject={handleStartAddProject} 
+        projects={projectsState.projects}
+        onSelectProject={handleSelectProject}
+      />
       {/* <NewProject /> */}
       {content}
     </main>
