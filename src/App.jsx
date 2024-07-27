@@ -11,7 +11,35 @@ function App() {
     // undefined to set we are not doing anything
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  // similar to add the new project we are adding the multiple tasks
+  function handleAddTask(text) {
+    setProjectsState((prevState) => {
+      const taskId = Math.random();
+      const newTask = {
+        text: text,
+        projectId: prevState.selectedProjectId,
+        id: taskId,
+      };
+
+      return {
+        ...prevState,
+        tasks: [...prevState.tasks, newTask],
+      };
+    });
+  }
+  
+  // to delete the added tasks using the selected input
+  function handleDeleteTask(id) {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter((task) => task.id != id),
+      };
+    });
+  }
 
   function handleDeleteProject() {
     setProjectsState((prevSate) => {
@@ -84,7 +112,15 @@ function App() {
   const selectedProject = projectsState.projects.find(
     (project) => project.id === projectsState.selectedProjectId
   );
-  let content = <SelectedProject project={selectedProject} onDelete={handleDeleteProject}/>;
+  let content = (
+    <SelectedProject
+      project={selectedProject}
+      onDelete={handleDeleteProject}
+      onAddTask={handleAddTask}
+      onDeleteTask={handleDeleteTask}
+      tasks={projectsState.tasks}
+    />
+  );
   //  this we have conditionally check whcih one to render based on the UI
   // when we click on the button to add the project we we call the handle add project and it will update our state
   // to set it to null to make sure that we are adding a new project and will render the component based on the
@@ -103,6 +139,7 @@ function App() {
         onSatartAddProject={handleStartAddProject}
         projects={projectsState.projects}
         onSelectProject={handleSelectProject} // we will get the id from the projectSideBar of the selected project
+        selectedProjectId={projectsState.selectedProjectId}
       />
       {content}
     </main>
