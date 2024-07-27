@@ -1,3 +1,5 @@
+import Tasks from "./Tasks";
+
 // this component will be appeared when we select the projects from the project side bar
 export default function SelectedProject({ project, onDelete }) {
   // to format the date
@@ -26,7 +28,7 @@ export default function SelectedProject({ project, onDelete }) {
           {project.description}
         </p>
       </header>
-      TASKS
+      <Tasks />
     </div>
   );
 }
