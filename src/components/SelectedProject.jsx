@@ -1,3 +1,4 @@
+// this component will be appeared when we select the projects from the project side bar
 export default function SelectedProject({ project }) {
   // to format the date
   const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {

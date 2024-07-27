@@ -13,11 +13,13 @@ function App() {
     projects: []
   });
 
+  // this function will be called from the projectSideBar component where it will update this state 
+  // that which project is currently selected
   function handleSelectProject(id){
     setProjectsState(prevState => {
       return {
         ...prevState,
-        selectedProjectId: id,    // and null to represent we are adding new project
+        selectedProjectId: id,    // and id to represent the currently selected project
       };
     });
   }
@@ -31,6 +33,7 @@ function App() {
     });
   }
 
+  // this function to cancel the project and set to the undefined and set it back to the intial state
   function handleCancelAddProject(){
     setProjectsState(prevState => {
       return {
@@ -59,6 +62,10 @@ function App() {
     });
   }
 
+  // now if we have selected the project and its id is updated in our projectSate and we can access that
+  // so to select that prject from our projects list we use JS find method and check if it matches
+  // with out selectedProjectId and will return it and pass the project(object) to the SelectedProject component.
+  // else if no project is there then will render the NewProject or NoProjectSelected based on the State. 
   const selectedProject = projectsState.projects.find(project => project.id === projectsState.selectedProjectId);
   let content = <SelectedProject project={selectedProject}/>
   //  this we have conditionally check whcih one to render based on the UI
@@ -74,9 +81,8 @@ function App() {
       <ProjectSideBar 
         onSatartAddProject={handleStartAddProject} 
         projects={projectsState.projects}
-        onSelectProject={handleSelectProject}
+        onSelectProject={handleSelectProject}    // we will get the id from the projectSideBar of the selected project
       />
-      {/* <NewProject /> */}
       {content}
     </main>
   );
